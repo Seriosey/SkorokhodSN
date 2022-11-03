@@ -67,15 +67,6 @@ private:
     Paddle* paddle;
 };
 
-class SpeedUpBonus : public Bonus {
-public:
-    SpeedUpBonus(float _x, float _y, Ball* _ball);
-    void BonusActivate();
-    void BonusDeactivate();
-private:
-    Ball* ball;
-};
-
 class SafeBottomBonus : public Bonus {
 public:
     SafeBottomBonus(float _x, float _y, RenderWindow* _window, Ball* _ball);
