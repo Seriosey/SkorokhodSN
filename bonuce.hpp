@@ -94,6 +94,19 @@ private:
     Ball* ball;
 };
 
+class SecondBall : public Bonus {
+public:
+    SecondBall(float _x, float _y, RenderWindow* _window, Ball* _ball, vector<Brick> _bricks, Paddle* _paddle);
+    void BonusActivate();
+    void BonusDeactivate();
+private:
+    vector<Brick> bricks;
+    RenderWindow* window;
+    Ball* second_ball;
+    Ball* ball;
+    Paddle* paddle;
+};
+
 class ChangeWayBonus : public Bonus {
 public:
     ChangeWayBonus(float _x, float _y, Ball* _ball);
