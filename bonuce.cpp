@@ -53,19 +53,26 @@ void SizeIncreaseBonus::BonusActivate() {
 	paddle->shape.setOrigin(paddle->shape.getSize().x / 2.f, paddleHeight / 2.f);
 };
 
-SpeedUpBonus::SpeedUpBonus(float _x, float _y, Ball* _ball) : Bonus(_x, _y) {
-	SetType(type);
-	type = "speedUpBonus";
-	ball = _ball;
-}
+SecondBall::SecondBall(float _x, float _y, RenderWindow* _window, Ball* _ball, vector<Brick> _bricks, Paddle* _paddle): Bonus(_x, _y) {
 
-void SpeedUpBonus::BonusActivate(){
-	ballVelocity *= 1.3;
-	ball->update();
+	SetType("SecondBall");
+	paddle = _paddle;
+	bricks = _bricks;
+	ball = _ball;
+	second_ball = new Ball(windowWidth / 2, windowHeight / 2);
+	second_ball ->shape.setFillColor(Color::Green);
+	window = _window;
 };
-void SpeedUpBonus::BonusDeactivate() {
-	ballVelocity /= 1.3;
-	ball->update();
+void SecondBall::BonusActivate() {
+	window->draw(second_ball->shape);
+	//second_ball->setVelocity(10);
+	for (auto& brick : bricks) testCollisionBB(brick, *second_ball, *paddle, *window);
+	testBallsCollision(*second_ball,  *ball);
+	
+	second_ball->update();
+};
+void SecondBall::BonusDeactivate() {
+	SetActivity(false);
 };
 
 SafeBottomBonus::SafeBottomBonus(float _x, float _y, RenderWindow* _window, Ball* _ball) : Bonus(_x, _y) {
@@ -179,7 +186,7 @@ Bonus* CreateBonuses(float mx, float my, Paddle* paddle, Ball* ball, RenderWindo
 		return bonus;
 	}
 	if (tmp == 1) {
-		Bonus* bonus = new SpeedUpBonus{ mx, my, ball };
+		Bonus* bonus = new NewBlockBonus{ mx, my, ball, window, paddle };
 		bonuses.push_back(bonus);
 		return bonus;
 	}
@@ -199,8 +206,8 @@ Bonus* CreateBonuses(float mx, float my, Paddle* paddle, Ball* ball, RenderWindo
 		return bonus;
 	}
 	if (tmp == 5) {
-		Bonus* bonus = new NewBlockBonus{ mx, my, ball, window, paddle };
-		bonuses.push_back(bonus);
-		return bonus;
+		//Bonus* bonus = new SecondBall{ mx, my, window, bricks, ball, paddle };
+		//bonuses.push_back(bonus);
+		//return bonus;
 	}
 }
