@@ -29,7 +29,7 @@ void testCollisionBB(Brick& mBrick, Ball& mBall, Paddle& mPaddle, RenderWindow& 
 
     switch (mBrick.bonus) {
     case 's': {
-        //mBall.setVelocity(ballVelocity * 1.1);
+        ballVelocity *= 1.02;
         break;}
     case 'l': {
         Bonus* tmpBonus = CreateBonuses(mx, my, &mPaddle, &mBall, &window);
